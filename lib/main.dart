@@ -4,14 +4,7 @@ import 'AdminForm.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (BuildContext context) => UserNotifier(),
-          )
-        ],
-        child: MyApp(),
-      ),
+      MyApp(),
     );
 
 class MyApp extends StatelessWidget {
@@ -23,7 +16,10 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AdminForm(title: 'main'),
+      home: ChangeNotifierProvider<UserNotifier>(
+        create: (context)=>UserNotifier(),
+        lazy: true,
+        child: AdminForm(title: 'main')),
     );
   }
 }

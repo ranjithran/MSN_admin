@@ -18,16 +18,17 @@ Color m1 = Color(0xff494D50);
 
 class _AdminFormState extends State<AdminForm> {
   // static UserNotifier get userNotifier => null;
-
+  
   @override
   void initState() {
-    UserNotifier userNotifier = Provider.of(context, listen: false);
+  final UserNotifier userNotifier = Provider.of(context, listen: false);
     getUers(userNotifier);
     super.initState();
   }
+
   final formKey = GlobalKey<FormState>();
   // List _selecteCategorys = List();
-  
+
   // Widget _submitBtn() {
   //   return Container(
   //     padding: EdgeInsets.fromLTRB(30, 25, 30, 25),
@@ -58,6 +59,7 @@ class _AdminFormState extends State<AdminForm> {
   //           fontFamily: 'OpenSans',
   //         ),
   //       ),
+
   //     ),
   //   );
   // }
@@ -88,6 +90,7 @@ class _AdminFormState extends State<AdminForm> {
   @override
   Widget build(BuildContext context) {
     // UserNotifier userNtfr = Provider.of<UserNotifier>(context);
+
     return new Scaffold(
       backgroundColor: m0,
       appBar: new AppBar(
@@ -206,11 +209,16 @@ class _AdminFormState extends State<AdminForm> {
               Container(
                 color: Color(0xff494D50),
                 height: 200,
-                child: CheckboxGroup(
-                  labels: [],
-                  onChange: (bool isChecked, String label, int index) => print("isChecked: $isChecked   label: $label  index: $index"),
-                  onSelected: (List<String> checked) => print("checked: ${checked.toString()}"),
-                )
+                child: SingleChildScrollView(
+                    child: Consumer<UserNotifier>(
+                  builder: (context, model, child) => CheckboxGroup(
+                    labels: model.userList,
+                    onChange: (bool isChecked, String label, int index) => print(
+                        "isChecked: $isChecked   label: $label  index: $index"),
+                    onSelected: (List<String> checked) =>
+                        print("checked: ${checked.toString()}"),
+                  ),
+                )),
               ),
               Divider(
                 color: Colors.white,
