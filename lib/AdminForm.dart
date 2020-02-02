@@ -1,3 +1,4 @@
+import 'package:admin/SendingNotification.dart';
 import 'package:admin/userNotifier.dart';
 import 'package:admin/widgets/CustomTFF.dart';
 import 'package:flutter/material.dart';
@@ -253,6 +254,9 @@ class _AdminFormState extends State<AdminForm> {
               SizedBox(
                 height: 15,
               ),
+              RaisedButton(
+                onPressed: deliveryNotification,
+              )
             ],
           ),
         ),
