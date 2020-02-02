@@ -1,8 +1,8 @@
 import 'package:admin/res/colors.dart';
 import 'package:flutter/material.dart';
 
-class CutomRB extends StatelessWidget {
-  CutomRB({@required this.onPressed, @required this.txt});
+class CustomRB extends StatelessWidget {
+  CustomRB({@required this.onPressed, @required this.txt});
 
   final GestureTapCallback onPressed;
   final String txt;

@@ -21,9 +21,7 @@ class _Frm2State extends State<Frm2> {
     getUers(userNotifier);
     super.initState();
   }
-
-  final form2Key = GlobalKey<FormState>();
-
+  
   final cnCntlr = TextEditingController();
   final subTitleCntlr = TextEditingController();
   final caCntlr = TextEditingController();
@@ -162,7 +160,7 @@ class _Frm2State extends State<Frm2> {
               Divider(
                 color: Colors.white,
               ),
-              CutomRB(
+              CustomRB(
                 txt: 'frm 2',
                 onPressed: () {
                   // deliveryNotification();

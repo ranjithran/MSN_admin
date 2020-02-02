@@ -5,8 +5,7 @@ import 'package:http/http.dart';
 import 'res/apikeys.dart';
 import 'res/appdata.dart';
 
-Future sendmessage(
-    ttl, sttl, company, totalBuy, totalSell, stopLossSell) async {
+Future sendmessage({ttl, sttl, company, totalBuy, totalSell, stopLossSell}) async {
   IntraDayNotifi data = new IntraDayNotifi(
       notification: new Notification(
           body: "MRF",  //TODO:craete a field for this also
@@ -30,19 +29,18 @@ Future sendmessage(
   print(apost);
 }
 
-Future deliveryNotification() async {
+Future deliveryNotification({cn, ca, t, c, rd, rp, pt, tt, us}) async {
   DeliveryNotifi delnotifi = new DeliveryNotifi(
     data: new DelData(
-      //TODO:create ui for this
-      companyName: "MRF",
-      clickAction: "FLUTTER_NOTIFICATION_CLICK",
-      type: "Delviry",
-      cmp: "5899.09",
-      recoDate: "25-01-2020",
-      recoPrice: "300.00",
-      priceTraget: "4800.98",
-      tragetTime: "2-3 years",
-      upSide: "50.00",
+      companyName: cn,
+      clickAction: ca,
+      type: t,
+      cmp: c,
+      recoDate: rd,
+      recoPrice: rp,
+      priceTraget: pt,
+      tragetTime: tt,
+      upSide: us,
     ),
     to: "fd7qBwuJgCU:APA91bHggzmk6OjZKVe-tFjbG1q6Mb3CkiB6LX3G7pCVhkN7prbsx-9Wdh709Rn8llPOgKX0SU1Fed42hNJ7P0Bn2jyeWHt2TE0aIPDOKiOYEiEAb2NAIhFgjG_thWzun_PufpMoJiBs",
     notification: new DelNotification(

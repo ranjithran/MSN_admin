@@ -130,10 +130,10 @@ class _Frm1State extends State<Frm1> {
               Divider(
                 color: Colors.white,
               ),
-              CutomRB(
+              CustomRB(
                 txt: 'frm 1',
                 onPressed: () {
-                  // deliveryNotification();
+                  // sendmessage();
                 },
               ),
             ],

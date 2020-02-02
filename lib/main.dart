@@ -19,7 +19,12 @@ class MyApp extends StatelessWidget {
       home: ChangeNotifierProvider<UserNotifier>(
         create: (context) => UserNotifier(),
         lazy: true,
-        child: Chooser(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: Chooser(),
+          ),
+        ),
       ),
     );
   }
@@ -32,12 +37,16 @@ class Chooser extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          CutomRB(
-            onPressed: () {},
+          CustomRB(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => Frm1(title: 'frm 1',))
+            ),
             txt: 'frm 1',
           ),
-          CutomRB(
-            onPressed: () {},
+          CustomRB(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => Frm2(title: 'frm 2',))
+            ),
             txt: 'frm 2',
           ),
         ],
