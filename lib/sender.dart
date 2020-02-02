@@ -1,8 +1,9 @@
-import 'package:admin/Appdata.dart';
 import 'package:admin/DelviryNotification.dart';
 import 'package:admin/IntradayNotifidataJSON.dart';
 import 'package:http/http.dart';
-import 'Apikeys.dart';
+
+import 'res/apikeys.dart';
+import 'res/appdata.dart';
 
 Future sendmessage(
     ttl, sttl, company, totalBuy, totalSell, stopLossSell) async {
