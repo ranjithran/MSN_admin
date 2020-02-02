@@ -7,11 +7,10 @@ import 'Apikeys.dart';
 Future sendmessage(
     ttl, sttl, company, totalBuy, totalSell, stopLossSell) async {
   IntraDayNotifi data = new IntraDayNotifi(
-      notification:
-          new Notification(body:
-           //TODO:craete a field for this also
-           "MRF",
-            contentAvailable: "true", title: ttl),
+      notification: new Notification(
+          body: "MRF",  //TODO:craete a field for this also
+          contentAvailable: "true",
+          title: ttl),
       data: new Data(
         clickAction: "FLUTTER_NOTIFICATION_CLICK",
         companyName: company,
@@ -50,8 +49,7 @@ Future deliveryNotification() async {
   );
   var headers = {
     "Content-Type": "application/json",
-    "Authorization":
-        "key=$firebasekey"
+    "Authorization": "key=$firebasekey"
   };
   await post(url, body: deliveryNotifiToJson(delnotifi), headers: headers);
 }

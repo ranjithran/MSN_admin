@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final deliveryNotifi = deliveryNotifiFromJson(jsonString);
-
 import 'dart:convert';
 
 DeliveryNotifi deliveryNotifiFromJson(String str) => DeliveryNotifi.fromJson(json.decode(str));
