@@ -37,3 +37,4 @@ lib/generated_plugin_registrant.dart
 
 pubspec.lock
 google-services.json
+lib/Apikeys.dart

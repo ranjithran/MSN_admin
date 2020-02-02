@@ -34,6 +34,7 @@ class Data {
     String totalBuy;
     String totalSell;
     String stopLoss;
+    String type;
 
     Data({
         this.clickAction,
@@ -41,6 +42,7 @@ class Data {
         this.totalBuy,
         this.totalSell,
         this.stopLoss,
+        this.type,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -49,6 +51,7 @@ class Data {
         totalBuy: json["TotalBuy"],
         totalSell: json["TotalSell"],
         stopLoss: json["StopLoss"],
+        type:json["type"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -57,6 +60,7 @@ class Data {
         "TotalBuy": totalBuy,
         "TotalSell": totalSell,
         "StopLoss": stopLoss,
+        "type":type,
     };
 }
 
