@@ -2,7 +2,7 @@ import 'package:admin/res/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomRB extends StatelessWidget {
-  CustomRB({@required this.onPressed, @required this.txt});
+  CustomRB({@required this.onPressed, this.txt = 'click'});
 
   final GestureTapCallback onPressed;
   final String txt;

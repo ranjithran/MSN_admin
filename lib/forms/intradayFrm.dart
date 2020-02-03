@@ -1,37 +1,37 @@
 import 'package:admin/res/Colors.dart';
 import 'package:admin/res/widgets/customRB.dart';
 import 'package:admin/res/widgets/customTFF.dart';
+import 'package:admin/services/sender.dart';
 import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 
-class Frm2 extends StatefulWidget {
-  Frm2({Key key, this.title}) : super(key: key);
+class IntradayFrm extends StatefulWidget {
+  IntradayFrm({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _Frm2State createState() => new _Frm2State();
+  _IntradayFrmState createState() => new _IntradayFrmState();
 }
 
-class _Frm2State extends State<Frm2> {
+class _IntradayFrmState extends State<IntradayFrm> {
   @override
   void initState() {
     final UserNotifier userNotifier = Provider.of(context, listen: false);
     getUers(userNotifier);
     super.initState();
   }
-  
-  final cnCntlr = TextEditingController();
-  final subTitleCntlr = TextEditingController();
-  final caCntlr = TextEditingController();
-  final tCntlr = TextEditingController();
-  final cmpCntlr = TextEditingController();
-  final rdCntlr = TextEditingController();
-  final rpCntlr = TextEditingController();
-  final ptCntlr = TextEditingController();
-  final ttCntlr = TextEditingController();
-  final usCntlr = TextEditingController();
+
+  final form1Key = GlobalKey<FormState>();
+
+  final bodyCntlr = TextEditingController();
+  final titleCntlr = TextEditingController();
+  final subTitlecntlr = TextEditingController();
+  final companyNamecntlr = TextEditingController();
+  final totalBuycntlr = TextEditingController();
+  final totalSellcntlr = TextEditingController();
+  final stopLossSellcntlr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,92 +49,71 @@ class _Frm2State extends State<Frm2> {
           child: Column(
             children: <Widget>[
               CustomTFF(
+                title: "Body",
+                subtitle: "Body",
+                cntlr: bodyCntlr,
+                textInputType: TextInputType.text,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomTFF(
+                title: "Title",
+                subtitle: "Title",
+                cntlr: titleCntlr,
+                textInputType: TextInputType.text,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomTFF(
+                title: "Sub Title",
+                subtitle: "Sub Title",
+                cntlr: subTitlecntlr,
+                textInputType: TextInputType.text,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomTFF(
                 title: "Company Name",
                 subtitle: "Company Name",
-                cntlr: cnCntlr,
+                cntlr: companyNamecntlr,
                 textInputType: TextInputType.text,
               ),
               SizedBox(
                 height: 15,
               ),
               CustomTFF(
-                title: "Click Action",
-                subtitle: "Click Action",
-                cntlr: caCntlr,
+                title: "Sub Title",
+                subtitle: "Sub Title",
+                cntlr: subTitlecntlr,
                 textInputType: TextInputType.text,
               ),
               SizedBox(
                 height: 15,
               ),
               CustomTFF(
-                title: "Type",
-                subtitle: "Type",
-                cntlr: tCntlr,
+                title: "Total Sell",
+                subtitle: "Total Sell",
+                cntlr: totalSellcntlr,
                 textInputType: TextInputType.text,
               ),
               SizedBox(
                 height: 15,
               ),
               CustomTFF(
-                title: "CMP",
-                subtitle: "CMP",
-                cntlr: cmpCntlr,
-                textInputType: TextInputType.number,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Reco Date",
-                subtitle: "Reco Date",
-                cntlr: rdCntlr,
+                title: "Stop Loss Sell",
+                subtitle: "Stop Loss Sell",
+                cntlr: stopLossSellcntlr,
                 textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Reco Price",
-                subtitle: "Reco Price",
-                cntlr: rpCntlr,
-                textInputType: TextInputType.number,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Price Target",
-                subtitle: "Price Target",
-                cntlr: ptCntlr,
-                textInputType: TextInputType.number,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Target Time",
-                subtitle: "Target Time",
-                cntlr: ttCntlr,
-                textInputType: TextInputType.number,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "UpSide",
-                subtitle: "UpSide",
-                cntlr: usCntlr,
-                textInputType: TextInputType.number,
-              ),
-              SizedBox(
-                height: 15,
               ),
               Divider(
                 color: Colors.white,
               ),
               SizedBox(
                 child: Text(
-                  'sec2',
+                  'Users',
                   style: TextStyle(color: Colors.white),
                 ),
                 height: 20.0,
@@ -143,6 +122,8 @@ class _Frm2State extends State<Frm2> {
                 color: Colors.white,
               ),
               Container(
+                padding: EdgeInsets.symmetric(vertical: 0),
+                margin: EdgeInsets.symmetric(vertical: 0),
                 color: Color(0xff494D50),
                 height: 200,
                 child: SingleChildScrollView(
@@ -150,7 +131,7 @@ class _Frm2State extends State<Frm2> {
                     builder: (context, model, child) => CheckboxGroup(
                       labels: model.userList,
                       onChange: (bool isChecked, String label, int index) => print(
-                          "isChecked: $isChecked   label: $label  index: $index"),
+                          '' /* "isChecked: $isChecked   label: $label  index: $index" */),
                       onSelected: (List<String> checked) =>
                           print("checked: ${checked.toString()}"),
                     ),
@@ -160,10 +141,32 @@ class _Frm2State extends State<Frm2> {
               Divider(
                 color: Colors.white,
               ),
+              // BusyButton(
+              //   title: 'intraday',
+              //   onPressed: () {
+              //     sendmessage(
+              //       body: bodyCntlr,
+              //       title: titleCntlr,
+              //       sttl: subTitlecntlr,
+              //       companyName: companyNamecntlr,
+              //       totalBuy: totalBuycntlr,
+              //       totalSell: totalSellcntlr,
+              //       stopLoss: stopLossSellcntlr,
+              //     );
+              //   },
+              // )
               CustomRB(
-                txt: 'frm 2',
+                txt: 'Intraday',
                 onPressed: () {
-                  // deliveryNotification();
+                  sendmessage(
+                    body: bodyCntlr,
+                    title: titleCntlr,
+                    sttl: subTitlecntlr,
+                    companyName: companyNamecntlr,
+                    totalBuy: totalBuycntlr,
+                    totalSell: totalSellcntlr,
+                    stopLoss: stopLossSellcntlr,
+                  );
                 },
               ),
             ],

@@ -1,22 +1,22 @@
-import 'package:admin/DelviryNotification.dart';
-import 'package:admin/IntradayNotifidataJSON.dart';
+import 'package:admin/res/apikeys.dart';
+import 'package:admin/res/appdata.dart';
 import 'package:http/http.dart';
+import 'DelviryNotification.dart';
+import 'IntradayNotifidataJSON.dart';
 
-import 'res/apikeys.dart';
-import 'res/appdata.dart';
-
-Future sendmessage({ttl, sttl, company, totalBuy, totalSell, stopLossSell}) async {
+Future sendmessage({body, title, sttl, companyName, totalBuy, totalSell, stopLoss}) async {
   IntraDayNotifi data = new IntraDayNotifi(
       notification: new Notification(
-          body: "MRF",  //TODO:craete a field for this also
-          contentAvailable: "true",
-          title: ttl),
+        body: body,
+        contentAvailable: "true",
+        title: title,
+      ),
       data: new Data(
         clickAction: "FLUTTER_NOTIFICATION_CLICK",
-        companyName: company,
+        companyName: companyName,
         totalBuy: totalBuy,
         totalSell: totalSell,
-        stopLoss: stopLossSell,
+        stopLoss: stopLoss,
       ),
       to: "Devices Token");
 
@@ -29,18 +29,18 @@ Future sendmessage({ttl, sttl, company, totalBuy, totalSell, stopLossSell}) asyn
   print(apost);
 }
 
-Future deliveryNotification({cn, ca, t, c, rd, rp, pt, tt, us}) async {
+Future deliveryNotification({companyName, clickAction, type, cmp, recoDate, recoPrice, priceTraget, tragetTime, upSide}) async {
   DeliveryNotifi delnotifi = new DeliveryNotifi(
     data: new DelData(
-      companyName: cn,
-      clickAction: ca,
-      type: t,
-      cmp: c,
-      recoDate: rd,
-      recoPrice: rp,
-      priceTraget: pt,
-      tragetTime: tt,
-      upSide: us,
+      companyName: companyName,
+      clickAction: clickAction,
+      type: type,
+      cmp: cmp,
+      recoDate: recoDate,
+      recoPrice: recoPrice,
+      priceTraget: priceTraget,
+      tragetTime: tragetTime,
+      upSide: upSide,
     ),
     to: "fd7qBwuJgCU:APA91bHggzmk6OjZKVe-tFjbG1q6Mb3CkiB6LX3G7pCVhkN7prbsx-9Wdh709Rn8llPOgKX0SU1Fed42hNJ7P0Bn2jyeWHt2TE0aIPDOKiOYEiEAb2NAIhFgjG_thWzun_PufpMoJiBs",
     notification: new DelNotification(

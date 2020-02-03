@@ -1,8 +1,8 @@
-import 'frm1.dart';
-import 'frm2.dart';
 import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'forms/deliveryFrm.dart';
+import 'forms/intradayFrm.dart';
 import 'res/widgets/customRB.dart';
 
 void main() => runApp(MyApp());
@@ -39,15 +39,15 @@ class Chooser extends StatelessWidget {
         children: <Widget>[
           CustomRB(
             onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => Frm1(title: 'frm 1',))
+              MaterialPageRoute(builder: (_) => IntradayFrm(title: 'IntradayFrm',))
             ),
-            txt: 'frm 1',
+            txt: 'IntradayFrm',
           ),
           CustomRB(
             onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Frm2(title: 'frm 2',))
+              MaterialPageRoute(builder: (_) => DeliveryFrm(title: 'DeliveryFrm',))
             ),
-            txt: 'frm 2',
+            txt: 'DeliveryFrm',
           ),
         ],
       ),
