@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTFF extends StatefulWidget {
   final String title;
   final String subtitle;
-  final Function onChanged;
+  final void Function(String v) onChanged;
   final TextInputType textInputType;
   final TextEditingController cntlr;
   const CustomTFF(
@@ -50,6 +50,7 @@ class _CustomTFFState extends State<CustomTFF> {
             ),
             height: 50.0,
             child: TextFormField(
+              onChanged: widget.onChanged,
               controller: widget.cntlr,
               keyboardType: widget.textInputType,
               style: TextStyle(

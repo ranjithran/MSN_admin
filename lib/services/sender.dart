@@ -29,7 +29,7 @@ Future sendmessage({body, title, sttl, companyName, totalBuy, totalSell, stopLos
   print(apost);
 }
 
-Future deliveryNotification({companyName, clickAction, type, cmp, recoDate, recoPrice, priceTraget, tragetTime, upSide}) async {
+Future deliveryNotification({title, body, companyName, clickAction, type, cmp, recoDate, recoPrice, priceTraget, tragetTime, upSide}) async {
   DeliveryNotifi delnotifi = new DeliveryNotifi(
     data: new DelData(
       companyName: companyName,
@@ -44,7 +44,7 @@ Future deliveryNotification({companyName, clickAction, type, cmp, recoDate, reco
     ),
     to: "fd7qBwuJgCU:APA91bHggzmk6OjZKVe-tFjbG1q6Mb3CkiB6LX3G7pCVhkN7prbsx-9Wdh709Rn8llPOgKX0SU1Fed42hNJ7P0Bn2jyeWHt2TE0aIPDOKiOYEiEAb2NAIhFgjG_thWzun_PufpMoJiBs",
     notification: new DelNotification(
-        title: "IntraDay", body: "MRF", contentAvailable: "true"),
+        title: title, body: body, contentAvailable: "true"),
   );
   var headers = {
     "Content-Type": "application/json",

@@ -1,8 +1,8 @@
+import 'package:admin/forms/intradayFrm.dart';
 import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'forms/deliveryFrm.dart';
-import 'forms/intradayFrm.dart';
 import 'res/widgets/customRB.dart';
 
 void main() => runApp(MyApp());

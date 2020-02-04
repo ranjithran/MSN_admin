@@ -1,7 +1,5 @@
 import 'package:admin/res/Colors.dart';
-import 'package:admin/res/widgets/customRB.dart';
 import 'package:admin/res/widgets/customTFF.dart';
-import 'package:admin/services/sender.dart';
 import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,15 +21,131 @@ class _IntradayFrmState extends State<IntradayFrm> {
     super.initState();
   }
 
-  final form1Key = GlobalKey<FormState>();
+  static String a;
+  static String b;
+  static String c;
+  static String d;
+  static String e;
+  static String f;
+  static String g;
 
-  final bodyCntlr = TextEditingController();
-  final titleCntlr = TextEditingController();
-  final subTitlecntlr = TextEditingController();
-  final companyNamecntlr = TextEditingController();
-  final totalBuycntlr = TextEditingController();
-  final totalSellcntlr = TextEditingController();
-  final stopLossSellcntlr = TextEditingController();
+  int currentStep = 0;
+  bool complete = false;
+
+  next() {
+    currentStep + 1 != _steps.length
+        ? goTo(currentStep + 1)
+        : setState(() => complete = true);
+  }
+
+  cancel() {
+    if (currentStep > 0) {
+      goTo(currentStep - 1);
+    }
+  }
+
+  goTo(int step) {
+    setState(() => currentStep = step);
+  }
+
+  List<Step> _steps = [
+    Step(
+      isActive: true,
+      title: const Text('sec1'),
+      content: Column(
+        children: <Widget>[
+          CustomTFF(
+            title: "Title",
+            subtitle: "Title",
+            onChanged: (v) {
+              a = v;
+            },
+            textInputType: TextInputType.text,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CustomTFF(
+            title: "Body",
+            subtitle: "Body",
+            onChanged: (v) {
+              b = v;
+              print(a);
+            },
+            textInputType: TextInputType.text,
+          ),
+        ],
+      ),
+    ),
+    Step(
+      title: const Text('sec 2'),
+      isActive: false,
+      content: Column(
+        children: <Widget>[
+          CustomTFF(
+            title: "Sub Title",
+            subtitle: "Sub Title",
+            onChanged: (v) {
+              c = v;
+            },
+            textInputType: TextInputType.text,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CustomTFF(
+            title: "Company Name",
+            subtitle: "Company Name",
+            onChanged: (v) {
+              d = v;
+            },
+            textInputType: TextInputType.text,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CustomTFF(
+            title: "Total Sell",
+            subtitle: "Total Sell",
+            onChanged: (v) {
+              f = v;
+            },
+            textInputType: TextInputType.text,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CustomTFF(
+            title: "Stop Loss Sell",
+            subtitle: "Stop Loss Sell",
+            onChanged: (v) {
+              g = v;
+            },
+            textInputType: TextInputType.text,
+          ),
+        ],
+      ),
+    ),
+    Step(
+      isActive: false,
+      title: const Text('users'),
+      content: Container(
+        color: m1,
+        height: 500,
+        child: SingleChildScrollView(
+          child: Consumer<UserNotifier>(
+            builder: (context, model, child) => CheckboxGroup(
+              labels: model.userList,
+              onChange: (bool isChecked, String label, int index) => print(
+                  '' /* "isChecked: $isChecked   label: $label  index: $index" */),
+              onSelected: (List<String> checked) =>
+                  print("checked: ${checked.toString()}"),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,137 +156,16 @@ class _IntradayFrmState extends State<IntradayFrm> {
         centerTitle: true,
         backgroundColor: m0,
       ),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              CustomTFF(
-                title: "Body",
-                subtitle: "Body",
-                cntlr: bodyCntlr,
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Title",
-                subtitle: "Title",
-                cntlr: titleCntlr,
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Sub Title",
-                subtitle: "Sub Title",
-                cntlr: subTitlecntlr,
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Company Name",
-                subtitle: "Company Name",
-                cntlr: companyNamecntlr,
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Sub Title",
-                subtitle: "Sub Title",
-                cntlr: subTitlecntlr,
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Total Sell",
-                subtitle: "Total Sell",
-                cntlr: totalSellcntlr,
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              CustomTFF(
-                title: "Stop Loss Sell",
-                subtitle: "Stop Loss Sell",
-                cntlr: stopLossSellcntlr,
-                textInputType: TextInputType.text,
-              ),
-              Divider(
-                color: Colors.white,
-              ),
-              SizedBox(
-                child: Text(
-                  'Users',
-                  style: TextStyle(color: Colors.white),
-                ),
-                height: 20.0,
-              ),
-              Divider(
-                color: Colors.white,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 0),
-                margin: EdgeInsets.symmetric(vertical: 0),
-                color: Color(0xff494D50),
-                height: 200,
-                child: SingleChildScrollView(
-                  child: Consumer<UserNotifier>(
-                    builder: (context, model, child) => CheckboxGroup(
-                      labels: model.userList,
-                      onChange: (bool isChecked, String label, int index) => print(
-                          '' /* "isChecked: $isChecked   label: $label  index: $index" */),
-                      onSelected: (List<String> checked) =>
-                          print("checked: ${checked.toString()}"),
-                    ),
-                  ),
-                ),
-              ),
-              Divider(
-                color: Colors.white,
-              ),
-              // BusyButton(
-              //   title: 'intraday',
-              //   onPressed: () {
-              //     sendmessage(
-              //       body: bodyCntlr,
-              //       title: titleCntlr,
-              //       sttl: subTitlecntlr,
-              //       companyName: companyNamecntlr,
-              //       totalBuy: totalBuycntlr,
-              //       totalSell: totalSellcntlr,
-              //       stopLoss: stopLossSellcntlr,
-              //     );
-              //   },
-              // )
-              CustomRB(
-                txt: 'Intraday',
-                onPressed: () {
-                  sendmessage(
-                    body: bodyCntlr,
-                    title: titleCntlr,
-                    sttl: subTitlecntlr,
-                    companyName: companyNamecntlr,
-                    totalBuy: totalBuycntlr,
-                    totalSell: totalSellcntlr,
-                    stopLoss: stopLossSellcntlr,
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: complete
+          ? Text('i sent')
+          : Stepper(
+              // type: StepperType.horizontal,
+              steps: _steps,
+              currentStep: currentStep,
+              onStepContinue: next,
+              onStepTapped: (step) => goTo(step),
+              onStepCancel: cancel,
+            ),
     );
   }
 }
