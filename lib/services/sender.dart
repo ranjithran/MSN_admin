@@ -1,4 +1,4 @@
-import 'package:admin/res/apikeys.dart';
+
 import 'package:admin/res/appdata.dart';
 import 'package:http/http.dart';
 import 'DelviryNotification.dart';
@@ -48,7 +48,7 @@ Future deliveryNotification({title, body, companyName, clickAction, type, cmp, r
   );
   var headers = {
     "Content-Type": "application/json",
-    "Authorization": "key=$firebasekey"
+    // "Authorization": "key=$firebasekey"
   };
   await post(url, body: deliveryNotifiToJson(delnotifi), headers: headers);
 }

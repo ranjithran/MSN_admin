@@ -1,7 +1,10 @@
 import 'package:admin/forms/intradayFrm.dart';
+
 import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+import 'Screens/UserScreens.dart';
 import 'forms/deliveryFrm.dart';
 import 'res/widgets/customRB.dart';
 
@@ -38,19 +41,28 @@ class Chooser extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CustomRB(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => IntradayFrm(title: 'IntradayFrm',))
-            ),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => IntradayFrm(
+                      title: 'IntradayFrm',
+                    ))),
             txt: 'IntradayFrm',
           ),
           CustomRB(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => DeliveryFrm(title: 'DeliveryFrm',))
-            ),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => DeliveryFrm(
+                      title: 'DeliveryFrm',
+                    ))),
             txt: 'DeliveryFrm',
+          ),
+          CustomRB(
+            onPressed: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => UserScreen())),
+            txt: 'Chat',
           ),
         ],
       ),
     );
   }
 }
+
+

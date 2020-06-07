@@ -18,6 +18,7 @@ class UserNotifier with ChangeNotifier {
 }
 
 getUers(UserNotifier userNotifier) async {
+  print("gettinf list  of users");
   QuerySnapshot snapshot = await Firestore.instance.collection('user').getDocuments();
 
   List<String> _insideUserList= new List();
@@ -27,5 +28,6 @@ getUers(UserNotifier userNotifier) async {
     _insideUserList.add(user.usrName.toString());
     
   });
+    print(_insideUserList);
   userNotifier.settingUserList=_insideUserList;
 }

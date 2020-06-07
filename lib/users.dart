@@ -2,6 +2,8 @@ class Users {
   String email;
   String uid;
   String usrName;
+  String lastMessage;
+
   
   Users();
   

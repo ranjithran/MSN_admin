@@ -131,11 +131,11 @@ class _IntradayFrmState extends State<IntradayFrm> {
       title: const Text('users'),
       content: Container(
         color: m1,
-        height: 500,
+        // height: 500,
         child: SingleChildScrollView(
           child: Consumer<UserNotifier>(
             builder: (context, model, child) => CheckboxGroup(
-              labels: model.userList,
+              labels: model.userList.toList(),
               onChange: (bool isChecked, String label, int index) => print(
                   '' /* "isChecked: $isChecked   label: $label  index: $index" */),
               onSelected: (List<String> checked) =>
