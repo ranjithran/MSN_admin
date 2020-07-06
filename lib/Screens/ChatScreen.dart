@@ -1,7 +1,9 @@
+import 'package:admin/userNotifier.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
   ChatPage({Key key}) : super(key: key);
@@ -12,6 +14,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
+    final details=Provider.of<UserNotifier>(context,listen: false).userData;
     return Scaffold(
   
       appBar: AppBar(
@@ -21,7 +24,7 @@ class ChatPage extends StatelessWidget {
             child: Text(
           "Chat",
           style: TextStyle(
-              fontSize: ScreenUtil().setSp(20),
+              fontSize: ScreenUtil().setSp(80),
               color: Colors.black,
               fontWeight: FontWeight.w800),
         )),
@@ -46,7 +49,7 @@ class ChatPage extends StatelessWidget {
                   child: StreamBuilder<QuerySnapshot>(
                       stream: _firestore
                           .collection("Messages")
-                          .document("12345")
+                          .document(details.uid.hashCode.toString())
                           .collection("messages")
                           .orderBy("timestamp", descending: false)
                           .snapshots(),
@@ -112,7 +115,7 @@ class ChatPage extends StatelessWidget {
                             onPressed: () async {
                               var documentReference = _firestore
                                   .collection('Messages')
-                                  .document("12345")
+                                  .document(details.uid.hashCode.toString())
                                   .collection("messages")
                                   .document(DateTime.now()
                                       .millisecondsSinceEpoch

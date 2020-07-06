@@ -1,13 +1,13 @@
 import 'package:admin/res/Colors.dart';
+import 'package:admin/res/widgets/customRB.dart';
 import 'package:admin/res/widgets/customTFF.dart';
-import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DeliveryFrm extends StatefulWidget {
-  DeliveryFrm({Key key, this.title}) : super(key: key);
-  final String title;
+  DeliveryFrm({
+    Key key,
+  }) : super(key: key);
 
   @override
   _DeliveryFrmState createState() => new _DeliveryFrmState();
@@ -16,16 +16,10 @@ class DeliveryFrm extends StatefulWidget {
 class _DeliveryFrmState extends State<DeliveryFrm> {
   @override
   void initState() {
-    final UserNotifier userNotifier = Provider.of(context, listen: false);
-    getUers(userNotifier);
     super.initState();
   }
 
   static String ttl;
-  static String bd;
-  static String companyName;
-  static String clickAction;
-  static String type;
   static String cmp;
   static String recoDate;
   static String recoPrice;
@@ -35,7 +29,7 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
 
   int currentStep = 0;
   bool complete = false;
-
+//TODO:need to implment
   next() {
     currentStep + 1 != _steps.length
         ? goTo(currentStep + 1)
@@ -59,21 +53,10 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
       content: Column(
         children: <Widget>[
           CustomTFF(
-            title: "Title",
-            subtitle: "Title",
+            title: "Invest On",
+            subtitle: "MRF",
             onChanged: (v) {
               ttl = v;
-            },
-            textInputType: TextInputType.text,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustomTFF(
-            title: "Body",
-            subtitle: "Body",
-            onChanged: (v) {
-              bd = v;
             },
             textInputType: TextInputType.text,
           ),
@@ -86,42 +69,9 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
       content: Column(
         children: <Widget>[
           CustomTFF(
-            title: "Company Name",
-            subtitle: "Company Name",
-          onChanged: (v) {
-              companyName = v;
-            },
-            textInputType: TextInputType.text,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustomTFF(
-            title: "Click Action",
-            subtitle: "Click Action",
-          onChanged: (v) {
-              clickAction = v;
-            },
-            textInputType: TextInputType.text,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustomTFF(
-            title: "Type",
-            subtitle: "Type",
-          onChanged: (v) {
-              type = v;
-            },
-            textInputType: TextInputType.text,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustomTFF(
             title: "CMP",
             subtitle: "CMP",
-          onChanged: (v) {
+            onChanged: (v) {
               cmp = v;
             },
             textInputType: TextInputType.number,
@@ -132,7 +82,7 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
           CustomTFF(
             title: "Reco Date",
             subtitle: "Reco Date",
-          onChanged: (v) {
+            onChanged: (v) {
               recoDate = v;
             },
             textInputType: TextInputType.number,
@@ -143,7 +93,7 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
           CustomTFF(
             title: "Reco Price",
             subtitle: "Reco Price",
-          onChanged: (v) {
+            onChanged: (v) {
               recoPrice = v;
             },
             textInputType: TextInputType.number,
@@ -154,7 +104,7 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
           CustomTFF(
             title: "Price Target",
             subtitle: "Price Target",
-          onChanged: (v) {
+            onChanged: (v) {
               priceTarget = v;
             },
             textInputType: TextInputType.number,
@@ -165,7 +115,7 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
           CustomTFF(
             title: "Target Time",
             subtitle: "Target Time",
-          onChanged: (v) {
+            onChanged: (v) {
               targetTime = v;
             },
             textInputType: TextInputType.number,
@@ -176,7 +126,7 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
           CustomTFF(
             title: "UpSide",
             subtitle: "UpSide",
-          onChanged: (v) {
+            onChanged: (v) {
               upSide = v;
             },
             textInputType: TextInputType.number,
@@ -184,46 +134,125 @@ class _DeliveryFrmState extends State<DeliveryFrm> {
         ],
       ),
     ),
-    Step(
-      isActive: false,
-      title: const Text('users'),
-      content: Container(
-        color: m1,
-        // height: 500,
-        child: SingleChildScrollView(
-          child: Consumer<UserNotifier>(
-            builder: (context, model, child) => CheckboxGroup(
-              labels: model.userList,
-              onChange: (bool isChecked, String label, int index) => print(
-                  '' /* "isChecked: $isChecked   label: $label  index: $index" */),
-              onSelected: (List<String> checked) =>
-                  print("checked: ${checked.toString()}"),
-            ),
-          ),
-        ),
-      ),
-    ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return new Scaffold(
       backgroundColor: m0,
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text("Delivery"),
         centerTitle: true,
         backgroundColor: m0,
       ),
       body: complete
-          ? Text('d sent')
+          ? Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Card(
+                color: m1,
+                elevation: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TableData(
+                      leftData: "Invest on",
+                      rightData: ttl,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "CMP",
+                      rightData: cmp,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "RECO Date",
+                      rightData: recoDate,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "RECO Price",
+                      rightData: recoPrice,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "Price Traget",
+                      rightData: priceTarget,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "Target Time",
+                      rightData: targetTime,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "Upside",
+                      rightData: upSide,
+                    ),
+                    CustomRB(onPressed: (){},buttonTitle: "Submit",)
+
+                  ],
+                ),
+              ),
+            )
           : Stepper(
-              // type: StepperType.horizontal,
               steps: _steps,
               currentStep: currentStep,
               onStepContinue: next,
               onStepTapped: (step) => goTo(step),
               onStepCancel: cancel,
             ),
+    );
+  }
+}
+
+class TableData extends StatelessWidget {
+  const TableData({
+    Key key,
+    @required this.leftData,
+    @required this.rightData,
+  }) : super(key: key);
+
+  final String leftData;
+  final String rightData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text(
+            "${leftData ?? " "}",
+            
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: ScreenUtil().setSp(50),
+            ),
+          ),
+          Text(
+            " ${rightData ?? ""}",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: ScreenUtil().setSp(50),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

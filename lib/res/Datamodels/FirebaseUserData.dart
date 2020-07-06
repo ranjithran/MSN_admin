@@ -1,10 +1,9 @@
-class UserData{
-  final String name;
+class AdviceData{
   final String investon;
-  final String lastmessage;
-  final String hUid;
-  
+  final String buyAt;
+  final String sellAt;
+  final String stopLoss;
+  final String validity;
 
-  UserData({this.name, this.investon, this.lastmessage, this.hUid});
-
+AdviceData({this.investon, this.buyAt, this.sellAt, this.stopLoss, this.validity});
 }

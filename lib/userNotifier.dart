@@ -3,31 +3,58 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserNotifier with ChangeNotifier {
-  List<String> _userList = new List();
+  List<UserData> _data = new List();
 
-  List get userList => _userList;
+  List<UserData> get data => _data;
 
-  Users get cUser => cUser;
+  // Map _userMapData = new Map();
+  // Map get userMapData => _userMapData;
 
-  set settingUserList(List<String> userList) {
-    _userList = userList;
-    print("data form set"+_userList.length.toString());
+  //TODO:1
+  UserData _userData = new UserData();
+
+  UserData get userData => _userData;
+
+  gettingUserList() async {
+    print("gettinf list  of users");
+    QuerySnapshot snapshot =
+        await Firestore.instance.collection('user').getDocuments();
+    _data.clear();
+    snapshot.documents.forEach(
+      (documant) {
+        Users user = Users.fromMap(documant.data);
+        _data.add(
+          UserData(
+            name: user.usrName.toString(),
+            phonenumber: user.phonenumber.toString(),
+            statustime: user.createdtime.toDate().toString(),
+            uid: user.uid.toString(),
+          ),
+        );
+        // _userMapData[user.uid.toString()] = new UserData(
+        //     name: user.usrName,
+        //     phonenumber: user.phonenumber,
+        //     statustime: user.createdtime.toDate().toUtc().toString(),
+        //     uid: user.uid,
+        //     email: user.email);
+      },
+    );
+    
     notifyListeners();
   }
-  
-}
 
-getUers(UserNotifier userNotifier) async {
-  print("gettinf list  of users");
-  QuerySnapshot snapshot = await Firestore.instance.collection('user').getDocuments();
-
-  List<String> _insideUserList= new List();
-
-  snapshot.documents.forEach((documant) {
-    Users user = Users.fromMap(documant.data);
-    _insideUserList.add(user.usrName.toString());
-    
-  });
-    print(_insideUserList);
-  userNotifier.settingUserList=_insideUserList;
+  gettingUserDeatils(String uid) async {
+    print("getting user details");
+    print(uid);
+    DocumentSnapshot _doc =
+        await Firestore.instance.collection('user').document(uid).get();
+    Users user = Users.fromMap(_doc.data);
+    _userData = new UserData(
+        name: user.usrName,
+        phonenumber: user.phonenumber,
+        statustime: user.createdtime.toDate().toUtc().toString(),
+        uid: user.uid,
+        email: user.email);
+    notifyListeners();
+  }
 }

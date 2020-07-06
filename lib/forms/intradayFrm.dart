@@ -1,13 +1,20 @@
+import 'package:admin/FormsNotifer.dart';
+import 'package:admin/Logic/FirebaseServices.dart';
 import 'package:admin/res/Colors.dart';
+import 'package:admin/res/Datamodels/FirebaseUserData.dart';
+import 'package:admin/res/widgets/customRB.dart';
 import 'package:admin/res/widgets/customTFF.dart';
 import 'package:admin/userNotifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+
+import 'deliveryFrm.dart';
 
 class IntradayFrm extends StatefulWidget {
-  IntradayFrm({Key key, this.title}) : super(key: key);
-  final String title;
+  IntradayFrm({
+    Key key,
+  }) : super(key: key);
 
   @override
   _IntradayFrmState createState() => new _IntradayFrmState();
@@ -16,18 +23,16 @@ class IntradayFrm extends StatefulWidget {
 class _IntradayFrmState extends State<IntradayFrm> {
   @override
   void initState() {
-    final UserNotifier userNotifier = Provider.of(context, listen: false);
-    getUers(userNotifier);
     super.initState();
   }
 
-  static String a;
-  static String b;
-  static String c;
-  static String d;
-  static String e;
-  static String f;
-  static String g;
+  final FirebaseServices _firebaseServices = FirebaseServices();
+
+  static String investon;
+  static String buyAt;
+  static String sellAt;
+  static String stopLoss;
+  static String validity;
 
   int currentStep = 0;
   bool complete = false;
@@ -36,6 +41,9 @@ class _IntradayFrmState extends State<IntradayFrm> {
     currentStep + 1 != _steps.length
         ? goTo(currentStep + 1)
         : setState(() => complete = true);
+    if (investon != null) {
+      Provider.of<FormsNotifer>(context, listen: false).settingTitle(investon);
+    }
   }
 
   cancel() {
@@ -51,26 +59,20 @@ class _IntradayFrmState extends State<IntradayFrm> {
   List<Step> _steps = [
     Step(
       isActive: true,
-      title: const Text('sec1'),
+      title: Consumer<UserNotifier>(builder: (context, _, child) {
+        return Text('For ${_.userData.name ?? " "}',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: ScreenUtil().setSp(45),
+                fontWeight: FontWeight.w800));
+      }),
       content: Column(
         children: <Widget>[
           CustomTFF(
-            title: "Title",
-            subtitle: "Title",
+            title: "Invest on ",
+            subtitle: "MRF",
             onChanged: (v) {
-              a = v;
-            },
-            textInputType: TextInputType.text,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustomTFF(
-            title: "Body",
-            subtitle: "Body",
-            onChanged: (v) {
-              b = v;
-              print(a);
+              investon = v;
             },
             textInputType: TextInputType.text,
           ),
@@ -78,15 +80,21 @@ class _IntradayFrmState extends State<IntradayFrm> {
       ),
     ),
     Step(
-      title: const Text('sec 2'),
+      title: Consumer<FormsNotifer>(builder: (context, _, child) {
+        return Text('${_.investTilte ?? " "}',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: ScreenUtil().setSp(45),
+                fontWeight: FontWeight.w800));
+      }),
       isActive: false,
       content: Column(
         children: <Widget>[
           CustomTFF(
-            title: "Sub Title",
-            subtitle: "Sub Title",
+            title: "Buy At",
+            subtitle: "100",
             onChanged: (v) {
-              c = v;
+              buyAt = v;
             },
             textInputType: TextInputType.text,
           ),
@@ -94,10 +102,10 @@ class _IntradayFrmState extends State<IntradayFrm> {
             height: 15,
           ),
           CustomTFF(
-            title: "Company Name",
-            subtitle: "Company Name",
+            title: "Sell At",
+            subtitle: "200",
             onChanged: (v) {
-              d = v;
+              sellAt = v;
             },
             textInputType: TextInputType.text,
           ),
@@ -105,10 +113,10 @@ class _IntradayFrmState extends State<IntradayFrm> {
             height: 15,
           ),
           CustomTFF(
-            title: "Total Sell",
-            subtitle: "Total Sell",
+            title: "Stop Loss",
+            subtitle: "50",
             onChanged: (v) {
-              f = v;
+              stopLoss = v;
             },
             textInputType: TextInputType.text,
           ),
@@ -116,48 +124,92 @@ class _IntradayFrmState extends State<IntradayFrm> {
             height: 15,
           ),
           CustomTFF(
-            title: "Stop Loss Sell",
-            subtitle: "Stop Loss Sell",
+            title: "Validity",
+            subtitle: "18-06-2020",
             onChanged: (v) {
-              g = v;
+              validity = v;
             },
             textInputType: TextInputType.text,
           ),
         ],
-      ),
-    ),
-    Step(
-      isActive: false,
-      title: const Text('users'),
-      content: Container(
-        color: m1,
-        // height: 500,
-        child: SingleChildScrollView(
-          child: Consumer<UserNotifier>(
-            builder: (context, model, child) => CheckboxGroup(
-              labels: model.userList.toList(),
-              onChange: (bool isChecked, String label, int index) => print(
-                  '' /* "isChecked: $isChecked   label: $label  index: $index" */),
-              onSelected: (List<String> checked) =>
-                  print("checked: ${checked.toString()}"),
-            ),
-          ),
-        ),
       ),
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+    final details = Provider.of<UserNotifier>(context, listen: false).userData;
+
     return new Scaffold(
       backgroundColor: m0,
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text("IntraDay"),
         centerTitle: true,
         backgroundColor: m0,
       ),
       body: complete
-          ? Text('i sent')
+          ? Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Card(
+                color: m1,
+                elevation: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TableData(
+                      leftData: "Invest on",
+                      rightData: investon,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "Buy At",
+                      rightData: buyAt,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "Sell At",
+                      rightData: sellAt,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "StopLoss",
+                      rightData: stopLoss,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    TableData(
+                      leftData: "Validity",
+                      rightData: validity,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(40),
+                    ),
+                    CustomRB(
+                      onPressed: () {
+                        AdviceData data = new AdviceData(
+                            buyAt: buyAt,
+                            investon: investon,
+                            sellAt: sellAt,
+                            stopLoss: stopLoss,
+                            validity: validity);
+                        _firebaseServices.settingAdvices(
+                            details.uid.hashCode.toString(), data);
+                        Navigator.of(context).pop();
+                      },
+                      buttonTitle: "Submit",
+                    )
+                  ],
+                ),
+              ),
+            )
           : Stepper(
               // type: StepperType.horizontal,
               steps: _steps,

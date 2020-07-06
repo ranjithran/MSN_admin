@@ -2,14 +2,14 @@ import 'package:admin/res/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomRB extends StatelessWidget {
-  CustomRB({@required this.onPressed, this.txt = 'click'});
+  CustomRB({@required this.onPressed, this.buttonTitle = 'click'});
 
   final GestureTapCallback onPressed;
-  final String txt;
+  final String buttonTitle;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(30, 25, 30, 25),
+      padding: EdgeInsets.fromLTRB(30, 15, 30,15),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
@@ -20,7 +20,7 @@ class CustomRB extends StatelessWidget {
         ),
         color: mBtn,
         child: Text(
-          txt,
+          buttonTitle,
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.5,
