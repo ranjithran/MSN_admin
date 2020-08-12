@@ -52,7 +52,7 @@ class UserNotifier with ChangeNotifier {
     _userData = new UserData(
         name: user.usrName,
         phonenumber: user.phonenumber,
-        statustime: user.createdtime.toDate().toUtc().toString(),
+        // statustime: user.createdtime.toDate().toUtc().toString(),
         uid: user.uid,
         email: user.email);
     notifyListeners();

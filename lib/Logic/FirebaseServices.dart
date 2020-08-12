@@ -12,11 +12,11 @@ class FirebaseServices {
       await transaction.set(
         documentReference,
         {
-          "InvestOn": data.investon,
-          "BuyAt": data.buyAt,
-          "SellAt": data.sellAt,
-          "StopLoss": data.stopLoss,
-          "Validity": data.validity
+          "Buy": data.buyAt,
+          "Sell": data.sellAt,
+          "Stop Loss": data.stopLoss,
+          "Validity": data.validity,
+          "Invest On": data.investon
         },
       );
     });
